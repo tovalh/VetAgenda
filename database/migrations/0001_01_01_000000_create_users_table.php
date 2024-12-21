@@ -12,17 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-            $table->unsignedBigInteger('empresa_id')->default(1); // Relación con la empresa
+            $table->id(); // id automático
+            $table->string('name'); // Nombre del usuario
+            $table->string('email')->unique(); // Email único del usuario
+            $table->timestamp('email_verified_at')->nullable(); // Fecha de verificación del email
+            $table->string('password'); // Contraseña
+            $table->rememberToken(); // Token para recordar inicio de sesión
+            $table->unsignedBigInteger('rol_id')->default(2); // Rol del usuario (ejemplo: usuario, administrador)
 
-            $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
+            // Relación con la tabla empresas y Rols. NullOnDelete permite que se desasocie si la empresa es eliminada.
+
+            $table->foreignId('empresa_id')->nullable()->constrained('empresas')->nullOnDelete();
+            $table->foreign('rol_id')->references('id')->on('roles')->onDelete('cascade');
+
+            $table->timestamps(); // Campos created_at y updated_at
         });
+
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();

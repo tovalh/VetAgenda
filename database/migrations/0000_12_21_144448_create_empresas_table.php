@@ -12,13 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('empresas', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre');
-            $table->boolean('estado_suscripcion')->default(1);
-            $table->date('fecha_fin_suscripcion')->nullable();
-            $table->boolean('habilitado')->default(1);
-            $table->timestamps();
+            $table->id(); // id automático
+            $table->string('nombre'); // Nombre de la empresa
+            $table->string('dominio')->unique()->nullable(); // Dominio único para identificar empresas (opcional)
+            $table->boolean('estado_suscripcion')->default(true); // Si la empresa está activa
+            $table->date('fecha_fin_suscripcion')->nullable(); // Fecha de término de la suscripción
+            $table->boolean('habilitado')->default(true); // Si la empresa está habilitada
+            $table->json('configuracion')->nullable(); // Configuración personalizada por empresa
+            $table->timestamps(); // Campos created_at y updated_at
         });
+
     }
 
     /**

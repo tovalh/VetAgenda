@@ -17,7 +17,7 @@ class EmpresaController extends Controller
     public function index(): Response
     {
         return Inertia::render('Empresas/Index', [
-            // 'empresas'=>Empresa::all()
+             'empresas'=>Empresa::all()
         ]);
         //
     }
@@ -27,9 +27,9 @@ class EmpresaController extends Controller
      */
     public function create()
     {
+
         //
     }
-
     /**
      * Store a newly created resource in storage.
      */
