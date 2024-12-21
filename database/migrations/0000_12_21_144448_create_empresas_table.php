@@ -9,15 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('empresas', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('guard_name');
+            $table->string('nombre');
+            $table->boolean('estado_suscripcion')->default(1);
+            $table->date('fecha_fin_suscripcion')->nullable();
+            $table->boolean('habilitado')->default(1);
             $table->timestamps();
-
-            $table->unique(['name', 'guard_name']);
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('empresas');
     }
 };
